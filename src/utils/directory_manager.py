@@ -1,6 +1,6 @@
 import os
 import shutil
-from config import DIRECTORIES
+from models.config import DIRECTORIES
 
 def ensure_directories_exist():
     """

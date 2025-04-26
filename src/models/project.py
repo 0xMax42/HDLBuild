@@ -5,6 +5,16 @@ class SourceFile(BaseModel):
     path: str
     library: str = "work"   # Default auf 'work'
 
+class ToolOptions(BaseModel):
+    common: List[str] = Field(default_factory=list)
+    xst: List[str] = Field(default_factory=list)
+    ngdbuild: List[str] = Field(default_factory=list)
+    map: List[str] = Field(default_factory=list)
+    par: List[str] = Field(default_factory=list)
+    bitgen: List[str] = Field(default_factory=list)
+    trace: List[str] = Field(default_factory=list)
+    fuse: List[str] = Field(default_factory=list)
+
 class Dependency(BaseModel):
     name: str
     git: str
@@ -34,3 +44,4 @@ class ProjectConfig(BaseModel):
     constraints: Optional[str] = None
     build: Optional[BuildOptions] = None
     dependencies: Optional[List[Dependency]] = Field(default_factory=list)
+    tool_options: Optional[ToolOptions] = ToolOptions()

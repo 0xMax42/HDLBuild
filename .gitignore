@@ -184,3 +184,4 @@ vhdl/
 poetry.lock
 project.yml
 .project/
+.devcontainer/
