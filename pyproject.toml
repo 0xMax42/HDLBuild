@@ -5,6 +5,12 @@ description = "Flexible FPGA Build System"
 authors = ["0xMax42 <Mail@0xMax42.io>"]
 license = "MIT"
 readme = "README.md"
+packages = [
+    { include = "src", from = "." }
+]
+
+[tool.poetry.scripts]
+hdlbuild = "cli:main"
 
 [tool.poetry.dependencies]
 python = "^3.10"
