@@ -1,5 +1,5 @@
 import yaml
-from models.project import ProjectConfig
+from hdlbuild.models.project import ProjectConfig
 
 def load_project_config(path: str = "project.yml") -> ProjectConfig:
     """

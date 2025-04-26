@@ -3,13 +3,13 @@
 from typing import List, Set
 
 from git import Repo
-from models.config import DIRECTORIES, GIT
-from models.project import ProjectConfig
-from models.dependency import ResolvedDependency
+from hdlbuild.models.config import DIRECTORIES, GIT
+from hdlbuild.models.project import ProjectConfig
+from hdlbuild.models.dependency import ResolvedDependency
 import os
 
-from utils.console_utils import ConsoleUtils
-from utils.project_loader import load_project_config
+from hdlbuild.utils.console_utils import ConsoleUtils
+from hdlbuild.utils.project_loader import load_project_config
 
 class DependencyResolver:
     def __init__(self, root_project: ProjectConfig, offline_mode: bool = False):

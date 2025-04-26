@@ -1,11 +1,11 @@
 import argparse
 import sys
 
-from dependencies.resolver import DependencyResolver
-from tools.xilinx_ise.main import xilinx_ise_all, xilinx_ise_synth
-from utils.console_utils import ConsoleUtils
-from utils.directory_manager import clear_build_directories, clear_directories, ensure_directories_exist
-from utils.project_loader import load_project_config
+from hdlbuild.dependencies.resolver import DependencyResolver
+from hdlbuild.tools.xilinx_ise.main import xilinx_ise_all, xilinx_ise_synth
+from hdlbuild.utils.console_utils import ConsoleUtils
+from hdlbuild.utils.directory_manager import clear_build_directories, clear_directories, ensure_directories_exist
+from hdlbuild.utils.project_loader import load_project_config
 
 project = load_project_config()
 console_utils = ConsoleUtils("hdlbuild")

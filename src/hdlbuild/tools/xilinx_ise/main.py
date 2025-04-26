@@ -1,11 +1,11 @@
-from models.config import DIRECTORIES
-from models.project import ProjectConfig
-from tools.xilinx_ise.bitgen import copy_bitstream_file, run_bitgen
-from tools.xilinx_ise.map import copy_map_report, run_map
-from tools.xilinx_ise.ngdbuild import run_ngdbuild
-from tools.xilinx_ise.par import copy_par_report, copy_pinout_report, run_par
-from tools.xilinx_ise.trace import copy_trace_report, run_trace
-from tools.xilinx_ise.xst import copy_synthesis_report, generate_xst_project_file, generate_xst_script_file, run_xst
+from hdlbuild.models.config import DIRECTORIES
+from hdlbuild.models.project import ProjectConfig
+from hdlbuild.tools.xilinx_ise.bitgen import copy_bitstream_file, run_bitgen
+from hdlbuild.tools.xilinx_ise.map import copy_map_report, run_map
+from hdlbuild.tools.xilinx_ise.ngdbuild import run_ngdbuild
+from hdlbuild.tools.xilinx_ise.par import copy_par_report, copy_pinout_report, run_par
+from hdlbuild.tools.xilinx_ise.trace import copy_trace_report, run_trace
+from hdlbuild.tools.xilinx_ise.xst import copy_synthesis_report, generate_xst_project_file, generate_xst_script_file, run_xst
 
 
 def xilinx_ise_synth(project: ProjectConfig):

@@ -1,7 +1,7 @@
 # models/dependency.py
 
 from pydantic import BaseModel
-from models.project import ProjectConfig
+from hdlbuild.models.project import ProjectConfig
 
 class ResolvedDependency(BaseModel):
     project: ProjectConfig

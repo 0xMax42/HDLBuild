@@ -1,9 +1,9 @@
 import shutil
 import os
 from typing import Optional, List
-from models.project import ProjectConfig
-from models.config import DIRECTORIES
-from utils.console_utils import ConsoleTask, ConsoleUtils
+from hdlbuild.models.project import ProjectConfig
+from hdlbuild.models.config import DIRECTORIES
+from hdlbuild.utils.console_utils import ConsoleTask, ConsoleUtils
 from rich.console import Console
 
 def run_tool(

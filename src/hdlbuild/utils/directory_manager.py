@@ -1,7 +1,7 @@
 import os
 import shutil
-from models.config import DIRECTORIES
-from utils.console_utils import ConsoleUtils
+from hdlbuild.models.config import DIRECTORIES
+from hdlbuild.utils.console_utils import ConsoleUtils
 
 def ensure_directories_exist(silent: bool = False):
     """

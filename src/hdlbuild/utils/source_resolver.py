@@ -3,8 +3,8 @@
 import glob
 import os
 from typing import List, Tuple
-from models.project import SourceFile, ProjectConfig
-from models.dependency import ResolvedDependency
+from hdlbuild.models.project import SourceFile, ProjectConfig
+from hdlbuild.models.dependency import ResolvedDependency
 
 def _expand_project_sources(project: ProjectConfig, project_root: str) -> Tuple[List[Tuple[str, str]], List[Tuple[str, str]]]:
     """

@@ -1,9 +1,9 @@
 from typing import Optional
-from dependencies.resolver import DependencyResolver
-from models.config import DIRECTORIES
-from tools.xilinx_ise.common import copy_file, run_tool
-from utils.source_resolver import expand_all_sources
-from models.project import ProjectConfig
+from hdlbuild.dependencies.resolver import DependencyResolver
+from hdlbuild.models.config import DIRECTORIES
+from hdlbuild.tools.xilinx_ise.common import copy_file, run_tool
+from hdlbuild.utils.source_resolver import expand_all_sources
+from hdlbuild.models.project import ProjectConfig
 import subprocess
 import os
 import shutil
