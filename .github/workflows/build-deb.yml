@@ -1,7 +1,7 @@
 name: Build Wheels
 
 on:
-  workflow_dispatch: # <-- Nur manuell über GitHub auslösbar
+  workflow_dispatch: # <-- Nur manuell über GitHub startbar
 
 jobs:
   build:
@@ -11,15 +11,20 @@ jobs:
       - name: 🛒 Checkout Repository
         uses: actions/checkout@v4
 
+      - name: ⚙️ Prepare Environment Variables
+        run: |
+          echo "AGENT_TOOLSDIRECTORY=/home/runner/toolcache" >> $GITHUB_ENV
+          mkdir -p /home/runner/toolcache
+
       - name: 🐍 Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.12" # Deine Python-Version anpassen
+          python-version: "3.12"
 
       - name: 📦 Install Poetry
         run: |
           curl -sSL https://install.python-poetry.org | python3 -
-          echo "$HOME/.local/bin" >> $GITHUB_PATH  # Poetry ins PATH einfügen
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
 
       - name: 🔧 Install Project Dependencies
         run: |
@@ -29,15 +34,26 @@ jobs:
         run: |
           poetry export --without-hashes --format=requirements.txt > requirements.txt
 
-      - name: 📥 Download wheels for dependencies
+      - name: 📥 Download Wheels for Dependencies
         run: |
           mkdir -p dist/wheels
           pip install wheel
           pip download --only-binary=:all: --dest dist/wheels -r requirements.txt
 
-      - name: 🛠 Build own wheel
+      - name: 🛠 Build Project Wheel
         run: |
           poetry build -f wheel
+
+      - name: 🔌 Install pipx and wheel2deb
+        run: |
+          python3 -m pip install --user pipx
+          python3 -m pipx ensurepath
+          pipx install wheel2deb
+
+      - name: 🛠 Convert Wheel to DEB
+        run: |
+          mkdir -p dist/debs
+          wheel2deb dist/*.whl -d dist/debs
 
       - name: 📤 Upload dist/ artifacts
         uses: actions/upload-artifact@v4
