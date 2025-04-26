@@ -1,6 +1,6 @@
 from typing import Optional
 from models.config import DIRECTORIES
-from tools.xilinx_ise.common import copy_report_file, run_tool
+from tools.xilinx_ise.common import copy_file, run_tool
 from utils.source_resolver import expand_sources
 from models.project import ProjectConfig
 import subprocess
@@ -50,13 +50,14 @@ def run_xst(project: ProjectConfig):
         project=project,
         tool_executable_name="xst",
         mandatory_arguments=["-ifn", f"{project.name}.scr",
-        ], step_number=1, total_steps=6
+        ], step_number=1, total_steps=12
     )
 
 def copy_synthesis_report(project: ProjectConfig):
-    copy_report_file(
+    copy_file(
         project=project,
         source_filename=f"{project.name}.srp",
         destination_filename=f"{project.name}.SynthesisReport",
-        description="Synthesebericht"
+        description="Synthesebericht",
+        step_number=2, total_steps=12
     )

@@ -1,13 +1,10 @@
 import shutil
-import subprocess
 import os
-import threading
-import time
-import sys
 from typing import Optional, List
 from models.project import ProjectConfig
 from models.config import DIRECTORIES
-from utils.console_utils import ConsoleTask
+from utils.console_utils import ConsoleTask, ConsoleUtils
+from rich.console import Console
 
 def run_tool(
     project: ProjectConfig,
@@ -28,9 +25,6 @@ def run_tool(
     if not os.path.exists(tool_executable):
         raise FileNotFoundError(f"Executable nicht gefunden: {tool_executable}")
 
-    step_info = f"[{step_number}/{total_steps}] " if step_number and total_steps else ""
-    progress_line = f"{step_info}[hdlbuild] Starte {tool_executable_name.upper()}..."
-
     cmd = [tool_executable]
 
     if project.tool_options and project.tool_options.common:
@@ -43,15 +37,17 @@ def run_tool(
 
     cmd.extend(mandatory_arguments)
 
-    task = ConsoleTask(progress_line)
+    task = ConsoleTask("hdlbuild", tool_executable_name.upper(), step_number, total_steps)
     task.run_command(cmd, cwd=working_dir, silent=silent)
 
 
-def copy_report_file(
+def copy_file(
     project: ProjectConfig,
     source_filename: str,
     destination_filename: str,
-    description: str = "Report"
+    description: str = "Report",
+    step_number: Optional[int] = None,
+    total_steps: Optional[int] = None
 ):
     """
     Kopiert eine beliebige Report-Datei vom Build- in das Report-Verzeichnis.
@@ -71,4 +67,6 @@ def copy_report_file(
     os.makedirs(DIRECTORIES.report, exist_ok=True)
 
     shutil.copyfile(src_path, dst_path)
-    print(f"[hdlbuild] {description} kopiert nach {dst_path} 🗎")
+
+    util = ConsoleUtils("hdlbuild", step_number, total_steps)
+    util.print(f"{description} kopiert nach {dst_path}")
