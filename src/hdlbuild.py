@@ -30,21 +30,15 @@ print(f"XST project file generated at {DIRECTORIES.build}/{project.name}.prj")
 print(f"XST script file generated at {DIRECTORIES.build}/{project.name}.scr")
 
 run_xst(project)
-print("Run XST")
 
 copy_synthesis_report(project)
-print("Copy synthesis report")
 
 run_ngdbuild(project)
-print("Run ngdbuild")
 
 run_map(project)
-print("Run map")
 copy_map_report(project)
-print("Copy map report")
 
 run_par(project)
-print("Run par")
 copy_par_report(project)
 copy_pinout_report(project)
 
