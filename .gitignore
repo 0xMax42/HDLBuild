@@ -174,3 +174,13 @@ cython_debug/
 # PyPI configuration file
 .pypirc
 
+# hdlbuild specific
+
+.hdlbuild_deps/
+.working/
+reports/
+output/
+vhdl/
+poetry.lock
+project.yml
+.project/

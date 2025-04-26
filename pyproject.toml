@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "hdlbuild"
+version = "0.1.0"
+description = "Flexible FPGA Build System"
+authors = ["0xMax42 <Mail@0xMax42.io>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+pyyaml = "^6.0.2"
+doit = "^0.36.0"
+pydantic = "^2.11.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
