@@ -1,6 +1,7 @@
 import argparse
 import sys
 
+from dependencies.resolver import DependencyResolver
 from tools.xilinx_ise.main import xilinx_ise_all, xilinx_ise_synth
 from utils.console_utils import ConsoleUtils
 from utils.directory_manager import clear_build_directories, clear_directories, ensure_directories_exist
@@ -32,6 +33,12 @@ def synth(args):
     ensure_directories_exist()
     xilinx_ise_synth(project)
 
+def dep(args):
+    """Starts the dependencies process."""
+    console_utils.print("Starting dependencies process...")
+    DependencyResolver(project).resolve_all()
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="hdlbuild - Build management tool for FPGA projects",
@@ -62,6 +69,10 @@ def main():
     # Synth command
     parser_build = subparsers.add_parser("synth", help="Start the synth process")
     parser_build.set_defaults(func=synth)
+
+    # Dependencies command
+    parser_build = subparsers.add_parser("dep", help="Start the dependencies process")
+    parser_build.set_defaults(func=dep)
 
     args = parser.parse_args()
     args.func(args)

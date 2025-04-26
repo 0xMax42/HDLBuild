@@ -1,7 +1,8 @@
 from typing import Optional
+from dependencies.resolver import DependencyResolver
 from models.config import DIRECTORIES
 from tools.xilinx_ise.common import copy_file, run_tool
-from utils.source_resolver import expand_sources
+from utils.source_resolver import expand_all_sources
 from models.project import ProjectConfig
 import subprocess
 import os
@@ -12,12 +13,15 @@ def generate_xst_project_file(project: ProjectConfig, output_path: str):
     Generiert die XST .prj-Datei mit allen Quellcodes.
     """
     with open(output_path, "w") as f:
-        # VHDL-Sources
-        for lib, src in expand_sources(project.sources.vhdl):
-            f.write(f"vhdl {lib} \"{DIRECTORIES.get_relative_prefix()}/{src}\"\n")
-        # Verilog-Sources
-        for lib, src in expand_sources(project.sources.verilog):
-            f.write(f"verilog {lib} \"{DIRECTORIES.get_relative_prefix()}/{src}\"\n")
+        resolver = DependencyResolver(project, offline_mode=True)
+        resolver.resolve_all()
+        vhdl_sources, verilog_sources = expand_all_sources(project, resolver.resolved)
+
+        for lib, file in vhdl_sources:
+            f.write(f"vhdl {lib} \"{DIRECTORIES.get_relative_prefix()}{file}\"\n")
+
+        for lib, file in verilog_sources:
+            f.write(f"verilog {lib} \"{DIRECTORIES.get_relative_prefix()}{file}\"\n")
         
         # Optionale Dependencies
         if project.dependencies:

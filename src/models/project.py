@@ -16,7 +16,7 @@ class ToolOptions(BaseModel):
     fuse: List[str] = Field(default_factory=list)
 
 class Dependency(BaseModel):
-    name: str
+    name: Optional[str] = None  # Name ist jetzt optional
     git: str
     rev: str
     library: str = "work"   # Default auf 'work'
