@@ -1,46 +1,70 @@
-from models.config import DIRECTORIES
-from tools.xilinx_ise.bitgen import copy_bitstream_file, run_bitgen
-from tools.xilinx_ise.map import copy_map_report, run_map
-from tools.xilinx_ise.ngdbuild import run_ngdbuild
-from tools.xilinx_ise.par import copy_par_report, copy_pinout_report, run_par
-from tools.xilinx_ise.xst import copy_synthesis_report, generate_xst_project_file, generate_xst_script_file, run_xst
-from utils.directory_manager import clear_directories, ensure_directories_exist
+import argparse
+import sys
+
+from tools.xilinx_ise.main import xilinx_ise_all, xilinx_ise_synth
+from utils.console_utils import ConsoleUtils
+from utils.directory_manager import clear_build_directories, clear_directories, ensure_directories_exist
 from utils.project_loader import load_project_config
-from utils.source_resolver import expand_sources
 
 project = load_project_config()
+console_utils = ConsoleUtils("hdlbuild")
 
-print(project.name)
-print(project.sources.vhdl)
+def clear(args):
+    """Clears the build artifacts."""
+    if args.target == "all":
+        console_utils.print("Starting clear all process...")
+        clear_directories()
+        console_utils.print("All cleared.")
+    else:
+        console_utils.print("Clearing build artifacts...")
+        clear_build_directories()
+        console_utils.print("Build artifacts cleared.")
 
-clear_directories()
+def build(args):
+    """Starts the build process."""
+    console_utils.print("Starting build process...")
+    ensure_directories_exist(True)
+    xilinx_ise_all(project)
 
-ensure_directories_exist()
+def synth(args):
+    """Starts the build process."""
+    console_utils.print("Starting build process...")
+    ensure_directories_exist()
+    xilinx_ise_synth(project)
 
+def main():
+    parser = argparse.ArgumentParser(
+        description="hdlbuild - Build management tool for FPGA projects",
+        formatter_class=argparse.RawTextHelpFormatter
+    )
 
+    subparsers = parser.add_subparsers(
+        title="Commands",
+        description="Available commands",
+        dest="command",
+        required=True
+    )
 
-expanded_vhdl = expand_sources(project.sources.vhdl)
+    # Clear command
+    parser_clear = subparsers.add_parser("clear", help="Clear build artifacts")
+    parser_clear.add_argument(
+        "target",
+        nargs="?",
+        choices=["all"],
+        help="Specify 'all' to clear everything (optional)"
+    )
+    parser_clear.set_defaults(func=clear)
 
-for library, filepath in expanded_vhdl:
-    print(f"vhdl {library} \"{filepath}\"")
+    # Build command
+    parser_build = subparsers.add_parser("build", help="Start the build process")
+    parser_build.set_defaults(func=build)
 
-generate_xst_project_file(project, f"{DIRECTORIES.build}/{project.name}.prj")
-generate_xst_script_file(project, f"{DIRECTORIES.build}/{project.name}.scr")
-print(f"XST project file generated at {DIRECTORIES.build}/{project.name}.prj")
-print(f"XST script file generated at {DIRECTORIES.build}/{project.name}.scr")
+    # Synth command
+    parser_build = subparsers.add_parser("synth", help="Start the synth process")
+    parser_build.set_defaults(func=synth)
 
-run_xst(project)
+    args = parser.parse_args()
+    args.func(args)
 
-copy_synthesis_report(project)
-
-run_ngdbuild(project)
-
-run_map(project)
-copy_map_report(project)
-
-run_par(project)
-copy_par_report(project)
-copy_pinout_report(project)
-
-run_bitgen(project)
-copy_bitstream_file(project)
+if __name__ == "__main__":
+    main()
