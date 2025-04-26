@@ -1,0 +1,46 @@
+name: Build Wheels
+
+on:
+  workflow_dispatch: # <-- Nur manuell über GitHub auslösbar
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🛒 Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: 🐍 Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12" # Deine Python-Version anpassen
+
+      - name: 📦 Install Poetry
+        run: |
+          curl -sSL https://install.python-poetry.org | python3 -
+          echo "$HOME/.local/bin" >> $GITHUB_PATH  # Poetry ins PATH einfügen
+
+      - name: 🔧 Install Project Dependencies
+        run: |
+          poetry install
+
+      - name: 📝 Export requirements.txt
+        run: |
+          poetry export --without-hashes --format=requirements.txt > requirements.txt
+
+      - name: 📥 Download wheels for dependencies
+        run: |
+          mkdir -p dist/wheels
+          pip install wheel
+          pip download --only-binary=:all: --dest dist/wheels -r requirements.txt
+
+      - name: 🛠 Build own wheel
+        run: |
+          poetry build -f wheel
+
+      - name: 📤 Upload dist/ artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/

@@ -5,9 +5,7 @@ description = "Flexible FPGA Build System"
 authors = ["0xMax42 <Mail@0xMax42.io>"]
 license = "MIT"
 readme = "README.md"
-packages = [
-    { include = "hdlbuild", from = "src" }
-]
+packages = [{ include = "hdlbuild", from = "src" }]
 
 [tool.poetry.scripts]
 hdlbuild = "hdlbuild.cli:main"
@@ -19,6 +17,9 @@ doit = "^0.36.0"
 pydantic = "^2.11.3"
 rich = "^14.0.0"
 gitpython = "^3.1.44"
+
+[tool.poetry.requires-plugins]
+poetry-plugin-export = ">=1.8"
 
 
 [build-system]
