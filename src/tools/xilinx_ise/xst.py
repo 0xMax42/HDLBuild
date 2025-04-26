@@ -49,7 +49,8 @@ def run_xst(project: ProjectConfig):
     run_tool(
         project=project,
         tool_executable_name="xst",
-        mandatory_arguments=["-ifn", f"{project.name}.scr"]
+        mandatory_arguments=["-ifn", f"{project.name}.scr",
+        ], step_number=1, total_steps=6
     )
 
 def copy_synthesis_report(project: ProjectConfig):

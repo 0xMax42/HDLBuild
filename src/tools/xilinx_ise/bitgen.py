@@ -15,7 +15,7 @@ def run_bitgen(project: ProjectConfig):
             "-w",
             f"{project.name}.ncd",
             f"{project.name}.bit"
-        ]
+        ], step_number=5, total_steps=6
     )
 
 

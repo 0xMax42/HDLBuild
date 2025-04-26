@@ -16,7 +16,7 @@ def run_par(project: ProjectConfig):
             f"{project.name}.map.ncd",
             f"{project.name}.ncd",
             f"{project.name}.pcf"
-        ]
+        ], step_number=4, total_steps=6
     )
 
 def copy_par_report(project: ProjectConfig):

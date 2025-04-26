@@ -15,5 +15,5 @@ def run_ngdbuild(project: ProjectConfig):
             "-uc", f"{DIRECTORIES.get_relative_prefix()}{project.constraints}",
             f"{project.name}.ngc",
             f"{project.name}.ngd"
-        ]
+        ], step_number=2, total_steps=6
     )

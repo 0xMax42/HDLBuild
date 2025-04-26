@@ -17,7 +17,7 @@ def run_map(project: ProjectConfig):
             f"{project.name}.ngd",
             "-o", f"{project.name}.map.ncd",
             f"{project.name}.pcf"
-        ]
+        ], step_number=3, total_steps=6
     )
 
 def copy_map_report(project: ProjectConfig):
