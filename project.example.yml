@@ -56,3 +56,6 @@ tool_options:
     - "3"
 
   fuse: []
+
+  isim: 
+    - "-gui"

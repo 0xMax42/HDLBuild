@@ -14,6 +14,7 @@ class ToolOptions(BaseModel):
     bitgen: List[str] = Field(default_factory=list)
     trace: List[str] = Field(default_factory=list)
     fuse: List[str] = Field(default_factory=list)
+    isim: List[str] = Field(default_factory=list)
 
 class Dependency(BaseModel):
     name: Optional[str] = None  # Name ist jetzt optional
