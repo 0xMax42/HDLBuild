@@ -51,6 +51,12 @@ jobs:
           python3 -m pipx ensurepath
           pipx install wheel2deb
 
+      - name: 📦 Install wheel2deb Dependencys
+        run: |
+          sudo apt update
+          sudo apt install -y apt-file dpkg-dev fakeroot build-essential devscripts debhelper
+          sudo apt-file update
+
       - name: 🛠 Convert Wheel to DEB
         run: |
           mkdir -p dist/debs
