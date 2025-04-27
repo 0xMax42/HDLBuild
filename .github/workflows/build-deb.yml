@@ -54,7 +54,7 @@ jobs:
       - name: 🛠 Convert Wheel to DEB
         run: |
           mkdir -p dist/debs
-          wheel2deb default -x dist/*.whl -d dist/debs
+          wheel2deb default -x dist/*.whl -o dist/debs
 
       - name: 📤 Upload dist/ artifacts
         uses: actions/upload-artifact@v4
