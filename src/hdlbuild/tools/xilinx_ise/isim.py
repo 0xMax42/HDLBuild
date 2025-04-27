@@ -4,6 +4,7 @@ from typing import List
 from hdlbuild.models.project import ProjectConfig
 from hdlbuild.models.config import DIRECTORIES
 from hdlbuild.dependencies.resolver import DependencyResolver
+from hdlbuild.tools.xilinx_ise.common import run_tool
 from hdlbuild.utils.console_utils import ConsoleTask
 from hdlbuild.utils.source_resolver import expand_all_sources, expand_testbenches
 
@@ -86,28 +87,24 @@ def build_testbench(project: ProjectConfig, testbench_name: str):
         testbench_name=testbench_name
     )
 
-    # 2. Befehl bauen
-    xilinx_path = project.xilinx_path
-    xilinx_bin_dir = os.path.join(xilinx_path, "bin", "lin64")  # oder nt64 bei Windows
-    fuse_executable = os.path.join(xilinx_bin_dir, "fuse")
-
-    cmd = [
-        fuse_executable,
-        "-intstyle", "xflow",
+    # 2. FUSE-Befehl ausführen mit `run_tool`
+    mandatory_arguments = [
         "-prj", f"{project.name}_sim.prj",
         "-o", isim_exe_name,
         f"work.{testbench_name.replace('.vhd', '').replace('.v', '')}",
         "work.glbl"
     ]
 
-    # 3. Ausführen mit Konsole
-    task = ConsoleTask(prefix="hdlbuild", title=f"FUSE {testbench_name}")
-    result = task.run_command(cmd, cwd=DIRECTORIES.build)
+    run_tool(
+        project=project,
+        tool_executable_name="fuse",
+        tool_option_attr="fuse",
+        mandatory_arguments=mandatory_arguments,
+        working_dir=DIRECTORIES.build,
+        silent=False
+    )
 
-    if result != 0:
-        raise RuntimeError(f"FUSE fehlgeschlagen für Testbench {testbench_name}")
-
-def run_testbench(testbench_name: str):
+def run_testbench(project: ProjectConfig, testbench_name: str):
     """
     Führt eine gebaute Testbench-Executable aus (ISim Simulation).
 
@@ -116,7 +113,6 @@ def run_testbench(testbench_name: str):
     """
     # Pfade
     isim_exe_name = f"isim_{testbench_name.replace('.vhd', '').replace('.v', '')}"
-    isim_exe_path = os.path.join(DIRECTORIES.build, isim_exe_name)
 
     isim_cmd_file = os.path.join(DIRECTORIES.build, f"{isim_exe_name}.cmd")
 
@@ -124,13 +120,17 @@ def run_testbench(testbench_name: str):
     with open(isim_cmd_file, "w") as f:
         f.write("")
 
+    cmd = [f"./{isim_exe_name}"]
+
+    tool_opts = getattr(project.tool_options, "isim", [])
+    if tool_opts:
+        cmd.extend(tool_opts)
+
     # 2. Kommando bauen
-    cmd = [
-        f"./{isim_exe_name}", 
-        "-gui",
+    cmd.extend([
         "-tclbatch", 
         f"{isim_exe_name}.cmd"
-    ]
+    ])
 
     # 3. Ausführen
     task = ConsoleTask(prefix="hdlbuild", title=f"RUN {testbench_name}")

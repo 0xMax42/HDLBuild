@@ -44,7 +44,7 @@ def test(args):
     """Starts the test process."""
     console_utils.print("Starting test process...")
     build_testbench(project, args.target)
-    run_testbench(args.target)
+    run_testbench(project, args.target)
 
 
 def main():
