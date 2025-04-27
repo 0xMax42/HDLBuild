@@ -43,8 +43,8 @@ jobs:
       - name: 📥 Download Wheels for Dependencies
         run: |
           mkdir -p dist/wheels
-          pip install wheel
-          pip download --only-binary=:all: --dest dist -r requirements.txt
+          poetry run pip install wheel
+          poetry run pip download --only-binary=:all: --dest dist -r requirements.txt
 
       - name: 🛠 Build Project Wheel
         run: |
