@@ -6,7 +6,6 @@ from hdlbuild.utils.project_loader import load_project_config
 class BuildCommand:
     def __init__(self):
         self.console_utils = ConsoleUtils("hdlbuild")
-        self.project = load_project_config()
 
     def register(self, subparsers):
         parser = subparsers.add_parser("build", help="Start the build process")
@@ -20,6 +19,7 @@ class BuildCommand:
 
     def execute(self, args):
         """Starts the build process."""
+        self.project = load_project_config()
         if args.target == "synth":
             self.console_utils.print("Starting synth process...")
             ensure_directories_exist(True)

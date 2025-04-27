@@ -5,7 +5,6 @@ from hdlbuild.utils.project_loader import load_project_config
 class DepCommand:
     def __init__(self):
         self.console_utils = ConsoleUtils("hdlbuild")
-        self.project = load_project_config()
 
     def register(self, subparsers):
         parser = subparsers.add_parser("dep", help="Start the dependencies process")
@@ -13,5 +12,6 @@ class DepCommand:
 
     def execute(self, args):
         """Starts the dependencies process."""
+        self.project = load_project_config()
         self.console_utils.print("Starting dependencies process...")
         DependencyResolver(self.project).resolve_all()

@@ -5,7 +5,6 @@ from hdlbuild.utils.project_loader import load_project_config
 class TestCommand:
     def __init__(self):
         self.console_utils = ConsoleUtils("hdlbuild")
-        self.project = load_project_config()
 
     def register(self, subparsers):
         parser = subparsers.add_parser("test", help="Start the Tests process")
@@ -18,6 +17,7 @@ class TestCommand:
 
     def execute(self, args):
         """Starts the test process."""
+        self.project = load_project_config()
         self.console_utils.print("Starting test process...")
         build_testbench(self.project, args.target)
         run_testbench(self.project, args.target)
