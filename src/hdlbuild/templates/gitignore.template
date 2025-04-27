@@ -1,0 +1,5 @@
+.hdlbuild_deps/
+.working/
+reports/
+output/
+.locale/
