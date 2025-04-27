@@ -1,6 +1,7 @@
 from hdlbuild.commands.build import BuildCommand
 from hdlbuild.commands.clean import CleanCommand
 from hdlbuild.commands.dep import DepCommand
+from hdlbuild.commands.init import InitCommand
 from hdlbuild.commands.test import TestCommand
 
 
@@ -10,7 +11,8 @@ def register_commands(subparsers):
         CleanCommand(),
         BuildCommand(),
         DepCommand(),
-        TestCommand()
+        TestCommand(),
+        InitCommand(),
     ]
 
     for command in commands:
