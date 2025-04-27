@@ -1,41 +1,58 @@
-name: VGA_Test
-topmodule: VGA_Test_Top
+name: VGA
+topmodule: VGA_Test
 target_device: xc3s1200e-4-fg320
 xilinx_path: /opt/Xilinx/14.7/ISE_DS/ISE
 
 sources:
   vhdl:
-    - path: src/vga/*.vhd
-      library: work
-    - path: src/common/*.vhd
-      library: work
-    - path: src/VGA_test_top.vhd
-      library: work
-
-  verilog:
-    - path: src/old_modules/*.v
-      library: work
-
-dependencies:
-  - name: AsyncFIFO
-    git: "https://github.com/0xMax32/Asynchronous-FIFO-AXI-Handshake.git"
-    rev: "main"
-    library: asyncfifo
-  - name: GrayCounter
-    git: "https://github.com/0xMax32/Gray-Counter.git"
-    rev: "v1.0.0"
-    library: graycounter
-
-testbenches:
-  vhdl:
-    - path: src/tests/*.vhd
+    - path: vhdl/*.vhd
       library: work
 
   verilog: []
 
-constraints: constraints/VGA_Test.ucf
+dependencies:
+  - git: "https://git.0xmax42.io/maxp/Asynchronous-FIFO-AXI-Handshake.git"
+    rev: "hdlbuild"
+
+testbenches:
+  vhdl:
+    - path: vhdltests/*.vhd
+      library: work
+
+  verilog: []
+
+constraints: vhdl/VGA_test.ucf
 
 build:
   build_dir: working
   report_dir: reports
   copy_target_dir: output
+
+# Tool Optionen
+tool_options:
+  common: 
+    - "-intstyle"
+    - "xflow"
+
+  xst: 
+    - "-opt_mode Speed"
+    - "-opt_level 2"
+
+  ngdbuild: []
+
+  map: 
+    - "-detail"
+
+  par: []
+
+  bitgen: 
+    - "-g"
+    - "StartupClk:JtagClk"
+
+  trace:
+    - "-v"
+    - "3"
+    - "-n"
+    - "3"
+
+  fuse: []
