@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "hdlbuild"
-version = "0.2.0"
+version = "0.2.1"
 description = "Flexible FPGA Build System"
 authors = ["0xMax42 <Mail@0xMax42.io>"]
 license = "MIT"
@@ -12,7 +12,7 @@ hdlbuild = "hdlbuild.cli:main"
 
 [tool.poetry.dependencies]
 python = "^3.10"
-pyyaml = "^6.0.2"
+pyyaml = "5.4.1"
 doit = "^0.36.0"
 pydantic = "^2.11.3"
 rich = "^14.0.0"
