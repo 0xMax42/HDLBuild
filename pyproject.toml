@@ -6,6 +6,9 @@ authors = ["0xMax42 <Mail@0xMax42.io>"]
 license = "MIT"
 readme = "README.md"
 packages = [{ include = "hdlbuild", from = "src" }]
+include = [
+    "src/hdlbuild/templates/*"
+]
 
 [tool.poetry.scripts]
 hdlbuild = "hdlbuild.cli:main"
@@ -13,7 +16,6 @@ hdlbuild = "hdlbuild.cli:main"
 [tool.poetry.dependencies]
 python = "^3.10"
 pyyaml = "^6.0.2"
-doit = "^0.36.0"
 pydantic = "^2.11.3"
 rich = "^14.0.0"
 gitpython = "^3.1.44"
