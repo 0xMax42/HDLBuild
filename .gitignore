@@ -185,3 +185,4 @@ poetry.lock
 project.yml
 .project/
 .devcontainer/
+vhdltests/
