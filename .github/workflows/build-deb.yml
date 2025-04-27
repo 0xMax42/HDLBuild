@@ -39,7 +39,7 @@ jobs:
         run: |
           mkdir -p dist/wheels
           pip install wheel
-          pip download --only-binary=:all: --dest dist/wheels -r requirements.txt
+          pip download --only-binary=:all: --dest dist -r requirements.txt
 
       - name: 🛠 Build Project Wheel
         run: |
@@ -54,7 +54,7 @@ jobs:
       - name: 🛠 Convert Wheel to DEB
         run: |
           mkdir -p dist/debs
-          wheel2deb default -x dist/*.whl -o dist/debs
+          wheel2deb default -x dist -o dist/debs
 
       - name: 📤 Upload dist/ artifacts
         uses: actions/upload-artifact@v4
