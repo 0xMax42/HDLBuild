@@ -15,25 +15,22 @@ class InitCommand:
         """Initialize a new HDLBuild project."""
         project_dir = Path.cwd()
 
-        # Paths to templates
-        template_dir = Path(__file__).parent / "templates"
+        # Correctly resolve path to templates directory
+        script_dir = Path(__file__).parent.resolve()
+        template_dir = (script_dir / ".." / "templates").resolve()
 
-        # .gitignore
-        gitignore_template = template_dir / "gitignore.template"
-        gitignore_target = project_dir / ".gitignore"
+        # Files to copy
+        files = [
+            ("gitignore.template", ".gitignore"),
+            ("project.yml.template", "project.yml"),
+        ]
 
-        if not gitignore_target.exists():
-            shutil.copy(gitignore_template, gitignore_target)
-            self.console_utils.print("Created .gitignore")
-        else:
-            self.console_utils.print(".gitignore already exists, skipping.")
+        for template_name, target_name in files:
+            template_path = template_dir / template_name
+            target_path = project_dir / target_name
 
-        # project.yml
-        project_yml_template = template_dir / "project.yml.template"
-        project_yml_target = project_dir / "project.yml"
-
-        if not project_yml_target.exists():
-            shutil.copy(project_yml_template, project_yml_target)
-            self.console_utils.print("Created project.yml")
-        else:
-            self.console_utils.print("project.yml already exists, skipping.")
+            if not target_path.exists():
+                shutil.copy(template_path, target_path)
+                self.console_utils.print(f"Created {target_name}")
+            else:
+                self.console_utils.print(f"{target_name} already exists, skipping.")
