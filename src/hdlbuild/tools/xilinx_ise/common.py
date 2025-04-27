@@ -46,6 +46,7 @@ def copy_file(
     source_filename: str,
     destination_filename: str,
     description: str = "Report",
+    destination_dir: str = DIRECTORIES.report,
     step_number: Optional[int] = None,
     total_steps: Optional[int] = None
 ):
@@ -59,12 +60,12 @@ def copy_file(
         description (str): Optionale Beschreibung für die Ausgabe (z.B. "Synthesis Report")
     """
     src_path = os.path.join(DIRECTORIES.build, source_filename)
-    dst_path = os.path.join(DIRECTORIES.report, destination_filename)
+    dst_path = os.path.join(destination_dir, destination_filename)
 
     if not os.path.exists(src_path):
         raise FileNotFoundError(f"{description} nicht gefunden: {src_path}")
 
-    os.makedirs(DIRECTORIES.report, exist_ok=True)
+    os.makedirs(destination_dir, exist_ok=True)
 
     shutil.copyfile(src_path, dst_path)
 

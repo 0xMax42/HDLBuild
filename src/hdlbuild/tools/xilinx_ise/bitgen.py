@@ -23,7 +23,8 @@ def copy_bitstream_file(project: ProjectConfig):
     copy_file(
         project=project,
         source_filename=f"{project.name}.bit",
-        destination_filename=f"{project.name}.Bitstream",
+        destination_filename=f"{project.name}.bit",
+        destination_dir=DIRECTORIES.copy_target,
         description="Bitstream File",
         step_number=10, total_steps=12
     )

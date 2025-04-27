@@ -2,6 +2,8 @@ import argparse
 import sys
 
 from hdlbuild.dependencies.resolver import DependencyResolver
+from hdlbuild.models.config import DIRECTORIES
+from hdlbuild.tools.xilinx_ise.isim import build_testbench, generate_simulation_project_file, run_testbench
 from hdlbuild.tools.xilinx_ise.main import xilinx_ise_all, xilinx_ise_synth
 from hdlbuild.utils.console_utils import ConsoleUtils
 from hdlbuild.utils.directory_manager import clear_build_directories, clear_directories, ensure_directories_exist
@@ -38,6 +40,12 @@ def dep(args):
     console_utils.print("Starting dependencies process...")
     DependencyResolver(project).resolve_all()
 
+def test(args):
+    """Starts the test process."""
+    console_utils.print("Starting test process...")
+    build_testbench(project, args.target)
+    run_testbench(args.target)
+
 
 def main():
     parser = argparse.ArgumentParser(
@@ -67,12 +75,21 @@ def main():
     parser_build.set_defaults(func=build)
 
     # Synth command
-    parser_build = subparsers.add_parser("synth", help="Start the synth process")
-    parser_build.set_defaults(func=synth)
+    parser_synth = subparsers.add_parser("synth", help="Start the synth process")
+    parser_synth.set_defaults(func=synth)
 
     # Dependencies command
-    parser_build = subparsers.add_parser("dep", help="Start the dependencies process")
-    parser_build.set_defaults(func=dep)
+    parser_dep = subparsers.add_parser("dep", help="Start the dependencies process")
+    parser_dep.set_defaults(func=dep)
+
+    # Tests command
+    parser_test = subparsers.add_parser("test", help="Start the Tests process")
+    parser_test.set_defaults(func=test)
+    parser_test.add_argument(
+        "target",
+        nargs="?",
+        help="Select the target to test"
+    )
 
     args = parser.parse_args()
     args.func(args)

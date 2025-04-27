@@ -66,3 +66,35 @@ def expand_all_sources(root_project: ProjectConfig, resolved_dependencies: List[
         all_verilog_sources.extend(verilog_dep)
 
     return all_vhdl_sources, all_verilog_sources
+
+
+def expand_testbenches(project: ProjectConfig) -> List[Tuple[str, str]]:
+    """
+    Expandiert nur die Testbenches (vhdl und verilog) aus dem Hauptprojekt.
+
+    Args:
+        project (ProjectConfig): Das Hauptprojekt.
+
+    Returns:
+        List of (library, filepath) Tupel
+    """
+    expanded = []
+
+    if project.testbenches:
+        # VHDL Testbenches
+        for source in project.testbenches.vhdl:
+            full_pattern = os.path.join(".", source.path)
+            matched_files = glob.glob(full_pattern, recursive=True)
+            for file in matched_files:
+                normalized = os.path.normpath(file)
+                expanded.append((source.library, normalized))
+
+        # Verilog Testbenches (optional)
+        for source in project.testbenches.verilog:
+            full_pattern = os.path.join(".", source.path)
+            matched_files = glob.glob(full_pattern, recursive=True)
+            for file in matched_files:
+                normalized = os.path.normpath(file)
+                expanded.append((source.library, normalized))
+
+    return expanded
