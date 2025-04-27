@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "hdlbuild"
-version = "0.1.0"
+version = "0.2.0"
 description = "Flexible FPGA Build System"
 authors = ["0xMax42 <Mail@0xMax42.io>"]
 license = "MIT"
@@ -17,10 +17,6 @@ doit = "^0.36.0"
 pydantic = "^2.11.3"
 rich = "^14.0.0"
 gitpython = "^3.1.44"
-
-[tool.poetry.requires-plugins]
-poetry-plugin-export = ">=1.8"
-
 
 [build-system]
 requires = ["poetry-core"]
