@@ -62,8 +62,31 @@ jobs:
           mkdir -p dist/debs
           wheel2deb default -v -x dist -o dist/debs
 
-      - name: 📤 Upload dist/ artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: dist
-          path: dist/
+      - name: 📦 Clone `packages`-Branch in ./packages
+        run: |
+          REPO_URL_BASE="$(echo $GITHUB_SERVER_URL/debrepo.git | sed 's/^https\?:\/\///')"
+          REPO_URL="https://${{ secrets.TEA_USER }}:${{ secrets.TEA_PAT }}@$REPO_URL_BASE"
+          echo "::add-mask::$REPO_URL"
+          echo "📡 Klone Repository von: $REPO_URL"
+          git clone --depth 1 --branch packages "$REPO_URL" packages
+
+      - name: 📂 Ensure `./packages/hdlbuild` Exists and Copy DEBs
+        run: |
+          mkdir -p ./packages/hdlbuild
+          find dist/debs -type f -name "*.deb" -exec cp {} ./packages/hdlbuild/ \;
+
+      - name: 📝 Commit & Push immer
+        run: |
+          cd packages
+          git config user.name "Gitea CI"
+          git config user.email "ci@yourdomain"
+
+          git add hdlbuild/
+          git commit -m "🔄 Update hdlbuild $(date -u +'%Y-%m-%d %H:%M UTC')" || echo "🧊 Keine Änderungen – leerer Commit"
+
+          REPO_URL_BASE="$(echo $GITHUB_SERVER_URL/debrepo.git | sed 's/^https\?:\/\///')"
+          REPO_URL="https://${{ secrets.TEA_USER }}:${{ secrets.TEA_PAT }}@$REPO_URL_BASE"
+          echo "::add-mask::$REPO_URL"
+
+          git remote set-url origin "$REPO_URL"
+          git push origin packages
