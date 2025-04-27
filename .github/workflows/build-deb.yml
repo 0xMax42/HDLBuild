@@ -64,7 +64,7 @@ jobs:
 
       - name: 📦 Clone `packages`-Branch in ./packages
         run: |
-          REPO_URL_BASE="$(echo $GITHUB_SERVER_URL/debrepo.git | sed 's/^https\?:\/\///')"
+          REPO_URL_BASE="$(echo $GITHUB_SERVER_URL/${{ secrets.TEA_USER }}/debrepo.git | sed 's/^https\?:\/\///')"
           REPO_URL="https://${{ secrets.TEA_USER }}:${{ secrets.TEA_PAT }}@$REPO_URL_BASE"
           echo "::add-mask::$REPO_URL"
           echo "📡 Klone Repository von: $REPO_URL"
@@ -84,7 +84,7 @@ jobs:
           git add hdlbuild/
           git commit -m "🔄 Update hdlbuild $(date -u +'%Y-%m-%d %H:%M UTC')" || echo "🧊 Keine Änderungen – leerer Commit"
 
-          REPO_URL_BASE="$(echo $GITHUB_SERVER_URL/debrepo.git | sed 's/^https\?:\/\///')"
+          REPO_URL_BASE="$(echo $GITHUB_SERVER_URL/${{ secrets.TEA_USER }}/debrepo.git | sed 's/^https\?:\/\///')"
           REPO_URL="https://${{ secrets.TEA_USER }}:${{ secrets.TEA_PAT }}@$REPO_URL_BASE"
           echo "::add-mask::$REPO_URL"
 
