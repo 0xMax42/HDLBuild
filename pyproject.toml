@@ -20,6 +20,9 @@ pydantic = "^2.11.3"
 rich = "^14.0.0"
 gitpython = "^3.1.44"
 
+[tool.poetry.group.dev.dependencies]
+twine = "^6.1.0"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
