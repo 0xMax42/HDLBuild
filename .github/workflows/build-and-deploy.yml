@@ -1,0 +1,49 @@
+# .gitea/workflows/publish.yml
+
+name: Build and Publish
+
+on:
+  push:
+    paths:
+      - "pyproject.toml" # Nur bei Änderungen an dieser Datei
+  workflow_dispatch: # Manuelles Anstoßen zulassen
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: ⚙️ Prepare Environment Variables
+        run: |
+          echo "AGENT_TOOLSDIRECTORY=/home/runner/toolcache" >> $GITHUB_ENV
+          mkdir -p /home/runner/toolcache
+
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: 🐍 Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install Poetry
+        run: |
+          pip install poetry
+
+      - name: Install Project Dependencies
+        working-directory: .
+        run: |
+          poetry install
+
+      - name: Build Package
+        working-directory: .
+        run: |
+          poetry build
+
+      - name: Publish to Gitea Package Registry
+        working-directory: .
+        env:
+          TWINE_USERNAME: ${{ secrets.TWINE_USERNAME }}
+          TWINE_PASSWORD: ${{ secrets.TWINE_PASSWORD }}
+        run: |
+          poetry run twine upload --repository-url ${{ secrets.TWINE_URL }} dist/*
