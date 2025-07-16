@@ -6,9 +6,7 @@ authors = ["0xMax42 <Mail@0xMax42.io>"]
 license = "MIT"
 readme = "README.md"
 packages = [{ include = "hdlbuild", from = "src" }]
-include = [
-    "src/hdlbuild/templates/*"
-]
+include = ["src/hdlbuild/templates/*"]
 
 [tool.poetry.scripts]
 hdlbuild = "hdlbuild.cli:main"
