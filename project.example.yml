@@ -1,27 +1,23 @@
-name: VGA
-topmodule: VGA_Test
+name: 
+topmodule: 
 target_device: xc3s1200e-4-fg320
 xilinx_path: /opt/Xilinx/14.7/ISE_DS/ISE
+
+constraints: 
 
 sources:
   vhdl:
     - path: src/*.vhd
       library: work
 
-  verilog: []
-
-dependencies:
-  - git: "https://git.0xmax42.io/maxp/Asynchronous-FIFO-AXI-Handshake.git"
-    rev: "hdlbuild"
-
 testbenches:
   vhdl:
     - path: tests/*.vhd
       library: work
 
-  verilog: []
-
-constraints: src/VGA_test.ucf
+dependencies:
+  # - git: "https://git.0xmax42.io/maxp/Asynchronous-FIFO-AXI-Handshake.git"
+  #   rev: "hdlbuild"
 
 build:
   build_dir: working
@@ -39,7 +35,8 @@ tool_options:
   map: 
     - "-detail"
     - "-timing"
-    - "-ol high"
+    - "-ol"
+    - "high"
 
   par: []
 
