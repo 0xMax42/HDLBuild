@@ -1,27 +1,35 @@
-from hdlbuild.utils.console_utils import ConsoleUtils
-from hdlbuild.utils.directory_manager import clear_build_directories, clear_directories
+import typer
 
-class CleanCommand:
-    def __init__(self):
-        self.console_utils = ConsoleUtils("hdlbuild")
+from hdlbuild.utils.console_utils      import ConsoleUtils
+from hdlbuild.utils.directory_manager  import clear_build_directories, clear_directories
 
-    def register(self, subparsers):
-        parser = subparsers.add_parser("clean", help="Clean build artifacts")
-        parser.add_argument(
-            "target",
-            nargs="?",
-            choices=["all"],
-            help="Specify 'all' to clean everything (optional)"
-        )
-        parser.set_defaults(func=self.execute)
+cli = typer.Typer(rich_help_panel="🧹 Clean Commands")
 
-    def execute(self, args):
-        """Cleans the build artifacts."""
-        if args.target == "all":
-            self.console_utils.print("Starting clean all process...")
-            clear_directories()
-            self.console_utils.print("All cleaned.")
-        else:
-            self.console_utils.print("Clearing build artifacts...")
-            clear_build_directories()
-            self.console_utils.print("Build artifacts cleaned.")
+@cli.callback(invoke_without_command=True)
+def clean(
+    target: str = typer.Argument(
+        None,
+        help="Optional: 'all' → wipe *all* artefacts, otherwise only the build directory",
+        show_default=False,
+    )
+) -> None:
+    """
+    Remove build artefacts (`build/*`) or *everything* (`all`).
+
+    Examples
+    --------
+    ```bash
+    hdlbuild clean          # build/* and temporary files only
+    hdlbuild clean all      # also caches, logs, etc.
+    ```
+    """
+    console = ConsoleUtils("hdlbuild")
+
+    if target == "all":
+        console.print("Starting clean‑all …")
+        clear_directories()
+        console.print("All artefacts removed.")
+    else:
+        console.print("Removing build artefacts …")
+        clear_build_directories()
+        console.print("Build artefacts removed.")

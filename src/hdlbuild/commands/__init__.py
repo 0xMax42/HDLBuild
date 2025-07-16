@@ -1,1 +1,0 @@
-from .commands import register_commands

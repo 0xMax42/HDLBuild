@@ -1,23 +1,31 @@
-from hdlbuild.tools.xilinx_ise.isim import build_testbench, run_testbench
-from hdlbuild.utils.console_utils import ConsoleUtils
-from hdlbuild.utils.project_loader import load_project_config
+import typer
 
-class TestCommand:
-    def __init__(self):
-        self.console_utils = ConsoleUtils("hdlbuild")
+from hdlbuild.tools.xilinx_ise.isim  import build_testbench, run_testbench
+from hdlbuild.utils.console_utils    import ConsoleUtils
+from hdlbuild.utils.project_loader   import load_project_config
 
-    def register(self, subparsers):
-        parser = subparsers.add_parser("test", help="Start the Tests process")
-        parser.add_argument(
-            "target",
-            nargs="?",
-            help="Select the target to test"
-        )
-        parser.set_defaults(func=self.execute)
+cli = typer.Typer(rich_help_panel="🧪 Test Commands")
 
-    def execute(self, args):
-        """Starts the test process."""
-        self.project = load_project_config()
-        self.console_utils.print("Starting test process...")
-        build_testbench(self.project, args.target)
-        run_testbench(self.project, args.target)
+@cli.callback(invoke_without_command=True)
+def test(
+    target: str = typer.Argument(
+        None,
+        help="Name of the test target (leave empty to run all)",
+        show_default=False,
+    )
+) -> None:
+    """
+    Build and run testbenches.
+
+    ```bash
+    hdlbuild test            # run all TBs
+    hdlbuild test alu        # run TB 'alu' only
+    ```
+    """
+    console  = ConsoleUtils("hdlbuild")
+    project  = load_project_config()
+
+    console.print("Starting test flow …")
+    build_testbench(project, target)
+    run_testbench(project,  target)
+    console.print("Tests finished.")

@@ -1,17 +1,23 @@
-from hdlbuild.dependencies.resolver import DependencyResolver
-from hdlbuild.utils.console_utils import ConsoleUtils
-from hdlbuild.utils.project_loader import load_project_config
+import typer
 
-class DepCommand:
-    def __init__(self):
-        self.console_utils = ConsoleUtils("hdlbuild")
+from hdlbuild.dependencies.resolver  import DependencyResolver
+from hdlbuild.utils.console_utils    import ConsoleUtils
+from hdlbuild.utils.project_loader   import load_project_config
 
-    def register(self, subparsers):
-        parser = subparsers.add_parser("dep", help="Start the dependencies process")
-        parser.set_defaults(func=self.execute)
+cli = typer.Typer(rich_help_panel="🔗 Dependency Commands")
 
-    def execute(self, args):
-        """Starts the dependencies process."""
-        self.project = load_project_config()
-        self.console_utils.print("Starting dependencies process...")
-        DependencyResolver(self.project).resolve_all()
+@cli.callback(invoke_without_command=True)
+def dep() -> None:
+    """
+    Resolve all project dependencies.
+
+    ```bash
+    hdlbuild dep
+    ```
+    """
+    console  = ConsoleUtils("hdlbuild")
+    project  = load_project_config()
+
+    console.print("Resolving dependencies …")
+    DependencyResolver(project).resolve_all()
+    console.print("Dependencies resolved.")

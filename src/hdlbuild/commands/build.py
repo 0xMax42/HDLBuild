@@ -1,30 +1,34 @@
-from hdlbuild.tools.xilinx_ise.main import xilinx_ise_all, xilinx_ise_synth
-from hdlbuild.utils.console_utils import ConsoleUtils
-from hdlbuild.utils.directory_manager import ensure_directories_exist
-from hdlbuild.utils.project_loader import load_project_config
+import typer
 
-class BuildCommand:
-    def __init__(self):
-        self.console_utils = ConsoleUtils("hdlbuild")
+from hdlbuild.tools.xilinx_ise.main    import xilinx_ise_all, xilinx_ise_synth
+from hdlbuild.utils.console_utils      import ConsoleUtils
+from hdlbuild.utils.directory_manager  import ensure_directories_exist
+from hdlbuild.utils.project_loader     import load_project_config
 
-    def register(self, subparsers):
-        parser = subparsers.add_parser("build", help="Start the build process")
-        parser.add_argument(
-            "target",
-            nargs="?",
-            choices=["synth"],
-            help="Specify 'synth' to only synthesize the design (optional)"
-        )
-        parser.set_defaults(func=self.execute)
+cli = typer.Typer(rich_help_panel="🔨 Build Commands")
 
-    def execute(self, args):
-        """Starts the build process."""
-        self.project = load_project_config()
-        if args.target == "synth":
-            self.console_utils.print("Starting synth process...")
-            ensure_directories_exist(True)
-            xilinx_ise_synth(self.project)
-        else:
-            self.console_utils.print("Starting build process...")
-            ensure_directories_exist(True)
-            xilinx_ise_all(self.project)
+@cli.callback(invoke_without_command=True)
+def build(
+    target: str = typer.Argument(
+        None,
+        help="Optional: 'synth' to run synthesis only",
+        show_default=False,
+        rich_help_panel="🔨 Build Commands",
+    )
+) -> None:
+    """
+    Run the full build flow or synthesis only.
+
+    * `hdlbuild build` → full flow  
+    * `hdlbuild build synth` → synthesis only
+    """
+    console  = ConsoleUtils("hdlbuild")
+    project  = load_project_config()
+
+    ensure_directories_exist(True)
+    if target == "synth":
+        console.print("Starting synthesis …")
+        xilinx_ise_synth(project)
+    else:
+        console.print("Starting full build …")
+        xilinx_ise_all(project)
