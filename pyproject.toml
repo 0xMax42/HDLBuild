@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "hdlbuild"
-version = "0.6.0"
+version = "0.6.1"
 description = "Flexible FPGA Build System"
 authors = ["0xMax42 <Mail@0xMax42.io>"]
 license = "MIT"
