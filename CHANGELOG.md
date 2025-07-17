@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.7.0](https://git.0xmax42.io/maxp/hdlbuild/compare/v0.6.1..v0.7.0) - 2025-07-17
+
+### 🚀 Features
+
+- *(version)* Bump version to 0.7.0 - ([8adaa91](https://git.0xmax42.io/maxp/hdlbuild/commit/8adaa916ff4e736e9da707c232d6f57b788e57e8))
+- *(cli)* Add template generation commands - ([af0477f](https://git.0xmax42.io/maxp/hdlbuild/commit/af0477f8e74a9471c3e7d36877069592e41f651c))
+
 ## [0.6.1] - 2025-07-16
 
 ### 🚀 Features
