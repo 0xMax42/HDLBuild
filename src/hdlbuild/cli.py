@@ -1,6 +1,7 @@
 import typer
 from importlib.metadata import version, PackageNotFoundError
 
+from hdlbuild.commands.gen import cli as gen_cli
 from hdlbuild.commands.build import cli as build_cli
 from hdlbuild.commands.clean import cli as clean_cli
 from hdlbuild.commands.dep   import cli as dep_cli
@@ -18,12 +19,12 @@ app = typer.Typer(
     help=f"hdlbuild v{get_version()} – Build‑Management for FPGA projects"
 )
 
-# Unter‑Kommandos registrieren (entspricht add_subparsers)
 app.add_typer(build_cli, name="build", help="Build the project")
 app.add_typer(clean_cli, name="clean", help="Clean build artifacts")
 app.add_typer(dep_cli,   name="dep",   help="Resolve dependencies")
 app.add_typer(test_cli,  name="test",  help="Run simulations/testbenches")
 app.add_typer(init_cli,  name="init",  help="Initialize project")
+app.add_typer(gen_cli,   name="gen",   help="Generate HDL files from templates")
 
 def main():
     app()

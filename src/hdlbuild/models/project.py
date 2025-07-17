@@ -1,6 +1,8 @@
 from pydantic import BaseModel, Field
 from typing import List, Optional
 
+from hdlbuild.models.templates import ProjectTemplates
+
 class SourceFile(BaseModel):
     path: str
     library: str = "work"   # Default auf 'work'
@@ -43,6 +45,7 @@ class ProjectConfig(BaseModel):
     sources: Sources
     testbenches: Optional[Testbenches] = None
     constraints: Optional[str] = None
+    templates: Optional[ProjectTemplates] = None
     build: Optional[BuildOptions] = None
     dependencies: Optional[List[Dependency]] = Field(default_factory=list)
     tool_options: Optional[ToolOptions] = ToolOptions()
