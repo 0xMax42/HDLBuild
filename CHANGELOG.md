@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [unreleased]
+
+### 📚 Documentation
+
+- *(readme)* Add pip installation instructions and refine license section - ([3d52b6e](https://git.0xmax42.io/maxp/hdlbuild/commit/3d52b6e13fd14ff1df61cb6e27d4f31445c82270))
+
 ## [0.7.0](https://git.0xmax42.io/maxp/hdlbuild/compare/v0.6.1..v0.7.0) - 2025-07-17
 
 ### 🚀 Features
