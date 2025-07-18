@@ -41,6 +41,15 @@ HDLBuild is a flexible build management tool for FPGA projects. It simplifies th
 
 ---
 
+## Installation per pip
+
+To install HDLBuild via pip, run:
+```bash
+pip install --index-url https://git.0xmax42.io/api/packages/maxp/pypi/simple/ --extra-index-url https://pypi.org/ hdlbuild
+```
+
+---
+
 ## Usage
 
 ### CLI Commands
@@ -155,14 +164,4 @@ The project includes GitHub workflows for building and deploying the package:
 
 ## License
 
-This project is licensed under the MIT License.
-
----
-
-## Contributing
-
-Contributions are welcome! Please follow these steps:
-
-1. Fork the repository.
-2. Create a new branch for your feature or bugfix.
-3. Submit a pull request.
+This project is licensed under the [MIT License](LICENSE). See the LICENSE file for details.
