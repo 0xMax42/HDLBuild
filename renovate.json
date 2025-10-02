@@ -1,0 +1,33 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    ":semanticCommits",
+    ":semanticCommitType(chore)"
+  ],
+  "semanticCommitScope": "deps",
+  "packageRules": [
+    {
+      "matchDepTypes": [
+        "action",
+        "github-runner"
+      ],
+      "enabled": false
+    },
+    {
+      "matchUpdateTypes": [
+        "minor",
+        "patch",
+        "pin",
+        "digest"
+      ],
+      "enabled": true
+    },
+    {
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "enabled": false
+    }
+  ]
+}
