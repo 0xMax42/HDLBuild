@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [unreleased]
 
+### 🐛 Bug Fixes
+
+- *(deps)* Update dependency typer to ^0.19.0 - ([e68ce4f](https://git.0xmax42.io/maxp/hdlbuild/commit/e68ce4fd256ba62f0e0ed275a614c403be97caa1))
+
 ### 📚 Documentation
 
 - *(readme)* Add pip installation instructions and refine license section - ([3d52b6e](https://git.0xmax42.io/maxp/hdlbuild/commit/3d52b6e13fd14ff1df61cb6e27d4f31445c82270))
