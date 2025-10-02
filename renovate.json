@@ -3,7 +3,7 @@
   "extends": [
     "config:recommended",
     ":semanticCommits",
-    ":semanticCommitType(chore)"
+    ":semanticCommitTypeAll(chore)"
   ],
   "semanticCommitScope": "deps",
   "packageRules": [
