@@ -18,6 +18,10 @@ All notable changes to this project will be documented in this file.
 - *(ci)* Update runner image to ubuntu-latest - ([3cc00dd](https://git.0xmax42.io/maxp/hdlbuild/commit/3cc00dd76fb7702ca6827a10c7c7b731602a711c))
 - *(renovate)* Fix semantic commit rule - ([eb8a650](https://git.0xmax42.io/maxp/hdlbuild/commit/eb8a65042b622f39c2895cfe8c378c70275de4b2))
 
+### ◀️ Revert
+
+- "chore(deps): update dependency python to 3.14" - ([797bf00](https://git.0xmax42.io/maxp/hdlbuild/commit/797bf0093b0df984a8f9d1098863ed87118f4df3))
+
 ## [0.7.0](https://git.0xmax42.io/maxp/hdlbuild/compare/v0.6.1..v0.7.0) - 2025-07-17
 
 ### 🚀 Features
