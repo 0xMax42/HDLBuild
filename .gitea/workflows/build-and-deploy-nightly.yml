@@ -6,7 +6,7 @@ on:
     branches:
       - main
     paths-ignore:
-      - 'CHANGELOG.md'
+      - "CHANGELOG.md"
 
 jobs:
   build-and-publish:
@@ -20,14 +20,6 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.14"
-
-      - name: 🔄 Restore cache
-        uses: https://git.0xmax42.io/actions/cache@v1
-        with:
-          key: poetry-v1-${{ runner.os }}-${{ hashFiles('poetry.lock') }}
-          paths: |
-            ~/.cache/pypoetry
-            ~/.cache/pip
 
       - name: Install Poetry
         run: |
