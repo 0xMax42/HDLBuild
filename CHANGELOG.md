@@ -14,6 +14,7 @@ All notable changes to this project will be documented in this file.
 
 ### ⚙️ Miscellaneous Tasks
 
+- *(workflow)* Remove custom cache action from ci pipeline - ([14facd0](https://git.0xmax42.io/maxp/hdlbuild/commit/14facd0bf08cfdeb81782af000330c988125c0c1))
 - *(renovate)* Switch to shared preset and disable automerge - ([0a45a22](https://git.0xmax42.io/maxp/hdlbuild/commit/0a45a22d1d887dc6093a05e779bf670dafb29646))
 - *(ci)* Update runner image to ubuntu-latest - ([a3e60f8](https://git.0xmax42.io/maxp/hdlbuild/commit/a3e60f8620a954947f6d9b5a87935c25119a7134))
 - *(ci)* Update runner image to ubuntu-latest - ([3cc00dd](https://git.0xmax42.io/maxp/hdlbuild/commit/3cc00dd76fb7702ca6827a10c7c7b731602a711c))
